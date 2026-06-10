@@ -1,0 +1,249 @@
+﻿<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Papelería - Nueva Solicitud</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-gray-100 min-h-screen p-4 md:p-8 font-sans text-gray-800">
+
+  <!-- Header -->
+  <header class="max-w-6xl mx-auto mb-8 text-center md:text-left flex items-center gap-3">
+    <div class="bg-blue-600 p-3 rounded-lg text-white">
+      <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z"></path></svg>
+    </div>
+    <div class="flex-grow">
+      <h1 class="text-3xl font-bold text-gray-900">Centro de Servicios</h1>
+      <p class="text-gray-500">Agrega impresiones, descargas y artículos a tu solicitud.</p>
+    </div>
+    <!-- Tarjeta de Tasa de Cambio -->
+    <div class="hidden md:flex flex-col items-end bg-green-50 border border-green-200 p-2 rounded-lg">
+      <span class="text-xs text-green-600 font-bold uppercase tracking-wider">Tasa BCV del Día</span>
+      <span class="text-lg font-black text-green-800" id="tasa-dia">-- Bs</span>
+    </div>
+  </header>
+
+  <main class="max-w-6xl mx-auto grid grid-cols-1 lg:grid-cols-3 gap-6">
+    
+    <!-- COLUMNA IZQUIERDA: Formularios -->
+    <div class="lg:col-span-2 space-y-6">
+      
+      <!-- Datos del Cliente -->
+      <section class="bg-white p-6 rounded-2xl shadow-sm border border-gray-200">
+        <h2 class="text-xl font-bold mb-4 flex items-center gap-2">
+          <span class="bg-blue-100 text-blue-600 rounded-full w-8 h-8 flex items-center justify-center text-sm">1</span>
+          Tus Datos y Pago
+        </h2>
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+          <div>
+            <label class="block text-sm font-medium text-gray-700 mb-1">Cédula</label>
+            <input type="number" id="cliente-cedula" placeholder="Ej: 20123456" class="w-full rounded-lg border-gray-300 border p-2.5 focus:ring-2 focus:ring-blue-500 outline-none">
+          </div>
+          <div>
+            <label class="block text-sm font-medium text-gray-700 mb-1">Nombre Completo</label>
+            <input type="text" id="cliente-nombre" placeholder="Juan Pérez" class="w-full rounded-lg border-gray-300 border p-2.5 focus:ring-2 focus:ring-blue-500 outline-none">
+          </div>
+          
+          <!-- Ref. de Pago eliminado: ahora se recoge en el formulario de pago móvil antes de enviar -->
+        </div>
+      </section>
+
+      <!-- Servicio: Impresiones -->
+      <section class="bg-white p-6 rounded-2xl shadow-sm border border-gray-200 border-l-4 border-l-blue-500">
+        <h2 class="text-xl font-bold mb-4 text-gray-800">🖨️ Agregar Impresión</h2>
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+          <div class="md:col-span-2">
+            <label class="block text-sm font-medium text-gray-700 mb-1">Nombre del Archivo</label>
+            <input type="text" id="imp-nombre" placeholder="Ej: Trabajo de Grado final.pdf" class="w-full rounded-lg border-gray-300 border p-2.5 focus:ring-2 focus:ring-blue-500 outline-none">
+          </div>
+          <div>
+            <label class="block text-sm font-medium text-gray-700 mb-1">Tipo de Hoja</label>
+            <select id="imp-hoja" class="w-full rounded-lg border-gray-300 border p-2.5 focus:ring-2 focus:ring-blue-500 outline-none bg-white">
+              <option value="carta">Carta</option>
+              <option value="oficio">Oficio</option>
+            </select>
+          </div>
+          <div>
+            <label class="block text-sm font-medium text-gray-700 mb-1">Formato</label>
+            <select id="imp-color" class="w-full rounded-lg border-gray-300 border p-2.5 focus:ring-2 focus:ring-blue-500 outline-none bg-white">
+              <option value="bn">Blanco y Negro</option>
+              <option value="color">Color</option>
+            </select>
+          </div>
+          <div>
+            <label class="block text-sm font-medium text-gray-700 mb-1">Cantidad de Copias</label>
+            <input type="number" id="imp-copias" min="1" value="1" class="w-full rounded-lg border-gray-300 border p-2.5 focus:ring-2 focus:ring-blue-500 outline-none">
+          </div>
+          <div class="flex items-end">
+            <button type="button" id="btn-add-impresion" class="w-full bg-blue-100 text-blue-700 hover:bg-blue-200 font-semibold py-2.5 px-4 rounded-lg transition-colors flex justify-center items-center gap-2">
+              <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"></path></svg>
+              Añadir al Carrito
+            </button>
+          </div>
+        </div>
+      </section>
+
+      <!-- Servicio: Descargas -->
+      <section class="bg-white p-6 rounded-2xl shadow-sm border border-gray-200 border-l-4 border-l-purple-500">
+        <h2 class="text-xl font-bold mb-4 text-gray-800">⬇️ Solicitar Descarga</h2>
+        <div class="flex flex-col md:flex-row gap-4 items-end">
+          <div class="flex-grow w-full">
+            <label class="block text-sm font-medium text-gray-700 mb-1">Enlace del archivo a descargar</label>
+            <input type="url" id="desc-enlace" placeholder="https://drive.google.com/..." class="w-full rounded-lg border-gray-300 border p-2.5 focus:ring-2 focus:ring-purple-500 outline-none">
+          </div>
+          <button type="button" id="btn-add-descarga" class="w-full md:w-auto bg-purple-100 text-purple-700 hover:bg-purple-200 font-semibold py-2.5 px-6 rounded-lg transition-colors whitespace-nowrap">
+            Añadir Descarga
+          </button>
+        </div>
+      </section>
+
+      <!-- Servicio: Artículos -->
+      <section class="bg-white p-6 rounded-2xl shadow-sm border border-gray-200 border-l-4 border-l-orange-500">
+        <h2 class="text-xl font-bold mb-4 text-gray-800">✏️ Artículos de Papelería</h2>
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-4 items-end">
+          <div class="md:col-span-1">
+            <label class="block text-sm font-medium text-gray-700 mb-1">Artículo</label>
+            <select id="art-tipo" class="w-full rounded-lg border-gray-300 border p-2.5 focus:ring-2 focus:ring-orange-500 outline-none bg-white">
+              <option value="lapicero">Lapicero</option>
+              <option value="lapiz">Lápiz</option>
+              <option value="hojas_blancas">Hojas Blancas (Paquete)</option>
+              <option value="hojas_ministro">Hojas Ministro</option>
+              <option value="tijera">Tijera</option>
+              <option value="borrador">Borrador</option>
+            </select>
+          </div>
+          <div>
+            <label class="block text-sm font-medium text-gray-700 mb-1">Cantidad</label>
+            <input type="number" id="art-cantidad" min="1" value="1" class="w-full rounded-lg border-gray-300 border p-2.5 focus:ring-2 focus:ring-orange-500 outline-none">
+          </div>
+          <div>
+            <button type="button" id="btn-add-articulo" class="w-full bg-orange-100 text-orange-700 hover:bg-orange-200 font-semibold py-2.5 px-4 rounded-lg transition-colors">
+              Añadir Artículo
+            </button>
+          </div>
+        </div>
+      </section>
+
+    </div>
+
+    <!-- COLUMNA DERECHA: Carrito -->
+    <div class="lg:col-span-1">
+      <div class="bg-white p-6 rounded-2xl shadow-lg border border-gray-200 sticky top-6 flex flex-col h-auto max-h-[calc(100vh-3rem)]">
+        
+        <h2 class="text-xl font-bold mb-4 border-b pb-2 flex justify-between items-center">
+          <span>🛒 Tu Solicitud</span>
+          <span class="bg-blue-600 text-white text-xs py-1 px-2 rounded-full" id="carrito-badge">0 items</span>
+        </h2>
+
+        <div class="flex-grow overflow-y-auto mb-4 pr-2 space-y-3" id="lista-carrito">
+          <div id="carrito-vacio" class="text-center py-8 text-gray-400">
+            <svg class="w-12 h-12 mx-auto mb-2 opacity-50" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z"></path></svg>
+            <p class="text-sm">Tu solicitud está vacía.</p>
+            <p class="text-xs mt-1">Agrega servicios a la izquierda.</p>
+          </div>
+        </div>
+
+        <!-- Totales -->
+        <div class="border-t pt-4 mt-auto">
+          <div class="flex justify-between items-end mb-4">
+            <span class="text-gray-600 font-medium">Total a pagar:</span>
+            <div class="text-right">
+              <span class="text-3xl font-black text-green-600 block leading-none mb-1" id="tarifa-total-usd">0.00 $</span>
+              <span class="text-lg font-bold text-gray-500 block" id="tarifa-total">0.00 Bs</span>
+            </div>
+          </div>
+
+          <div id="mensaje-notificacion" class="hidden mb-3"></div>
+
+          <button type="button" id="btn-enviar-solicitud" class="w-full bg-blue-600 hover:bg-blue-700 text-white font-bold py-3.5 px-4 rounded-xl transition-all shadow-md flex justify-center items-center gap-2">
+            Enviar Solicitud Completa
+            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"></path></svg>
+          </button>
+        </div>
+
+      </div>
+    </div>
+
+  </main>
+
+  <!-- Modal: Confirmar Pago -->
+  <div id="modal-pago" class="hidden fixed inset-0 bg-black/40 flex items-center justify-center z-50">
+    <div class="bg-white rounded-2xl p-6 w-full max-w-md mx-4">
+      <h3 id="modal-pago-titulo" class="text-lg font-bold mb-3">Confirmar Pago</h3>
+      <p id="modal-pago-descripcion" class="text-sm text-gray-600 mb-4">Elige el método de pago y completa los datos si seleccionas Pago Móvil.</p>
+
+      <div id="pago-preview" class="mb-4 rounded-xl border border-gray-200 bg-slate-50 p-4 text-sm text-gray-700">
+        <p id="pago-preview-text">Vista previa del pago: Pago Móvil activo. Completa los datos y confirma.</p>
+      </div>
+
+      <div class="mb-4 rounded-xl border border-blue-200 bg-blue-50 p-4 text-sm text-blue-900">
+        <p class="font-semibold mb-2">Código de orden</p>
+        <p class="break-all text-base font-bold" id="orden-codigo">Generando...</p>
+        <p class="mt-2 text-xs text-blue-700">Este código se mostrará hasta que aceptes la solicitud.</p>
+      </div>
+
+      <form id="form-pago-movil" class="space-y-3">
+        <fieldset class="space-y-2">
+          <legend class="block text-sm font-medium text-gray-700">Método de pago</legend>
+          <div class="flex flex-col gap-2">
+            <label class="flex items-center gap-3 text-sm text-gray-700">
+              <input type="radio" name="pago-metodo" value="movil" checked class="h-4 w-4 text-blue-600 border-gray-300 focus:ring-blue-500" />
+              Pago Móvil
+            </label>
+            <label class="flex items-center gap-3 text-sm text-gray-700">
+              <input type="radio" name="pago-metodo" value="divisas" class="h-4 w-4 text-blue-600 border-gray-300 focus:ring-blue-500" />
+              Pago en Divisas ($ en efectivo)
+            </label>
+            <label class="flex items-center gap-3 text-sm text-gray-700">
+              <input type="radio" name="pago-metodo" value="bolivares" class="h-4 w-4 text-blue-600 border-gray-300 focus:ring-blue-500" />
+              Pago en Bolívares (Bs en efectivo)
+            </label>
+          </div>
+        </fieldset>
+        <div>
+          <label class="block text-sm font-medium text-gray-700">Cédula (en el pago)</label>
+          <input type="text" id="pago-cedula" class="w-full rounded-lg border p-2.5" />
+        </div>
+        <div>
+          <label class="block text-sm font-medium text-gray-700">Banco</label>
+          <select id="pago-banco" class="w-full rounded-lg border p-2.5 bg-white">
+            <option value="banesco">Banesco</option>
+            <option value="mercantil">Mercantil</option>
+            <option value="provincial">Provincial</option>
+            <option value="venezuela">Banco de Venezuela</option>
+          </select>
+        </div>
+
+        <div>
+            <label class="block text-sm font-medium text-gray-700">número de teléfono</label>
+            <input type="text" id="pago-telefono" maxlength="11" pattern="[0-9]{4}" inputmode="numeric" class="w-full rounded-lg border p-2.5" />
+        </div>
+        
+        <div>
+          <label class="block text-sm font-medium text-gray-700">Últimos 4 dígitos de referencia</label>
+          <input type="text" id="pago-ref4" maxlength="4" pattern="[0-9]{4}" inputmode="numeric" class="w-full rounded-lg border p-2.5" />
+        </div>
+        <div class="flex gap-3 justify-end pt-2">
+          <button type="button" id="btn-cancel-pago" class="px-4 py-2 rounded-lg border">Cancelar</button>
+          <button type="button" id="btn-confirm-pago" class="px-4 py-2 rounded-lg bg-blue-600 text-white">Confirmar y Enviar</button>
+        </div>
+      </form>
+    </div>
+  </div>
+<script type="module">
+    import Cl_vSolicitud from "./dist/views/Cl_vSolicitud.js";
+    import Cl_sSolicitud from "./dist/services/Cl_sSolicitud.js";
+    import Cl_cSolicitud from "./dist/controllers/Cl_cSolicitud.js";
+
+    document.addEventListener("DOMContentLoaded", () => {
+      // 1. Instanciamos la Vista y el Servicio (Backend)
+      const vista = new Cl_vSolicitud();
+      const servicio = new Cl_sSolicitud();
+      
+      // 2. El Controlador une la Vista, el Servicio y crea internamente el Modelo
+      const appControlador = new Cl_cSolicitud(vista, servicio);
+    });
+  </script>
+</body>
+</html>
